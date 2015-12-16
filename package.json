@@ -1,0 +1,21 @@
+{
+  "name": "evernote-vnote-import",
+  "version": "1.0.0",
+  "description": "Imports VNOTE (*.vnt) to Evernote via its API.",
+  "main": "index.js",
+  "dependencies": {
+    "evernote": "^1.25.82"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "evernote",
+    "vnote",
+    "vnt",
+    "import"
+  ],
+  "author": "John Babak <babak.john@gmail.com>",
+  "license": "MIT"
+}
