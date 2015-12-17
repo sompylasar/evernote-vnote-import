@@ -1,5 +1,5 @@
 var fs = require('fs');
-
+var mimelib = require('mimelib');
 var Evernote = require('evernote').Evernote;
 
 var developerToken = fs.readFileSync(__dirname + '/key.txt').toString().replace(/^\s*|\s*$/g, '');
@@ -71,18 +71,7 @@ function convertVnoteStringToEvernoteNoteParams(vnoteContent) {
       throw new Error('Expected ' + JSON.stringify(token) + ', got EOF');
     }
     function decodeQuotedPrintable(quotedPrintable) {
-      var ret = '';
-      for (var i = 0, ic = quotedPrintable.length; i < ic; ++i) {
-        var char = quotedPrintable.slice(i, i + 1);
-        if (char === '=') {
-          ret += String.fromCharCode(parseInt(quotedPrintable.slice(i + 1, i + 3), 16));
-          i += 2;
-        }
-        else {
-          ret += char;
-        }
-      }
-      return ret;
+      return mimelib.decodeQuotedPrintable(quotedPrintable);
     }
     function decodeVnoteDate(vnoteDateStr) {
       var dateTimezoneOffsetString = '+03:00';
@@ -167,7 +156,6 @@ function run(path) {
         return readdirPromised(path);
       })
       .then(function (files) {
-        files = [ files[0] ];
         return Promise.all(files.map(function (filename) {
           return (
             Promise.resolve()
